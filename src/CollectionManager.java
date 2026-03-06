@@ -16,9 +16,11 @@ public class CollectionManager{
                     exp.getName(),
                     exp.getDescribtion(), exp.getOwnerUsername());
             experimentList.add(expWithId);
+            experimentMap.put(expWithId.getId(),expWithId);
             System.out.println("OK. Experiment_id= "+expWithId.getId());
         } else {
             experimentList.add(exp);
+            experimentMap.put(exp.getId(), exp);
             System.out.println("OK. Experiment_id= "+ exp.getId());
         }
 

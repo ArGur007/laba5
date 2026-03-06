@@ -35,7 +35,7 @@ public class ExpShow implements Command {
             System.out.println("description: " + exp.getDescribtion());
             System.out.println("owner: " + exp.getOwnerUsername());
             System.out.println("created: " + exp.getCreatedAt());
-            System.out.println("runs: 3");  // это заглушка, пока нет runs
+            //System.out.println("runs: 3");  // это заглушка, пока нет runs
 
         } catch (NumberFormatException e) {
             System.out.println("Ошибка: ID должен быть числом");

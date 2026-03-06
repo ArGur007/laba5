@@ -3,105 +3,107 @@ import java.util.Scanner;
 public class ExpUpdate implements Command {
     private CollectionManager manager;
     private Scanner scanner;
+    private String currentUser;  // может понадобиться для проверки прав
 
-    public ExpUpdate(CollectionManager manager, Scanner scanner) {
+    public ExpUpdate(CollectionManager manager, Scanner scanner, String currentUser) {
         this.manager = manager;
         this.scanner = scanner;
+        this.currentUser = currentUser;
     }
 
     @Override
     public void execute() {
-        // Получаем всю строку команды от пользователя
-        String input = scanner.nextLine().trim();
+        System.out.println("> update");
 
-        // Разбираем команду
-        parseAndExecute(input);
-    }
+        Long id = null;
+        Experiment experiment = null;
 
-    private void parseAndExecute(String input) {
-        // Разбиваем по пробелам: ["exp_update", "2", "name=\"Nitrate removal test (v2)\""]
-        String[] parts = input.split(" ");
+        while (id == null) {
+            System.out.print("Введите ID эксперимента для обновления: ");
+            String idInput = scanner.nextLine().trim();
 
-        // Проверяем минимальное количество частей
-        if (parts.length < 3) {
-            System.out.println("Ошибка: Неверный формат. Используйте: exp_update <id> field=value ...");
-            return;
-        }
+            try {
+                id = Long.parseLong(idInput);
+                experiment = manager.findById(id);
 
-        // Проверяем, что это действительно команда exp_update
-        if (!parts[0].equals("exp_update")) {
-            System.out.println("Ошибка: Неверная команда");
-            return;
-        }
-
-        try {
-            // Получаем ID эксперимента
-            Long id = Long.parseLong(parts[1]);
-
-            // Ищем эксперимент
-            Experiment exp = manager.findById(id);
-            if (exp == null) {
-                System.out.println("Ошибка: Эксперимент с ID " + id + " не найден");
-                return;
-            }
-
-            // Обрабатываем все пары field=value
-            boolean updated = false;
-            for (int i = 2; i < parts.length; i++) {
-                if (updateField(exp, parts[i])) {
-                    updated = true;
+                if (experiment == null) {
+                    System.out.println("Ошибка: Эксперимент с ID " + id + " не найден");
+                    id = null;  // сбрасываем, чтобы запросить снова
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: ID должен быть числом");
             }
+        }
 
-            // Если хотя бы одно поле обновилось
-            if (updated) {
-                System.out.println("OK");
-            } else {
-                System.out.println("Ничего не обновлено");
-            }
+        System.out.println("Обновление эксперимента #" + id);
+        System.out.println("(Оставьте поле пустым и нажмите Enter, чтобы оставить текущее значение)");
 
-        } catch (NumberFormatException e) {
-            System.out.println("Ошибка: ID должен быть числом");
+        boolean nameUpdated = updateName(experiment);
+
+        boolean descUpdated = updateDescription(experiment);
+
+        // Шаг 4: Проверка, были ли изменения
+        if (nameUpdated || descUpdated) {
+            experiment.setUpdatedAt();  // обновляем время изменения
+            System.out.println("OK");
+        } else {
+            System.out.println("Ничего не обновлено");
         }
     }
 
-    private boolean updateField(Experiment exp, String fieldValue) {
-        // Разделяем на поле и значение
-        String[] keyValue = fieldValue.split("=", 2);
+    // Метод для обновления названия
+    private boolean updateName(Experiment experiment) {
+        String currentName = experiment.getName();
+        System.out.println("Текущее название: " + currentName);
 
-        if (keyValue.length != 2) {
-            System.out.println("Ошибка: Неверный формат поля. Используйте field=value");
-            return false;
-        }
+        while (true) {
+            System.out.print("Новое название (Enter - оставить текущее): ");
+            String input = scanner.nextLine().trim();
 
-        String field = keyValue[0].toLowerCase();
-        String value = keyValue[1];
-
-        // Убираем кавычки, если есть
-        if (value.startsWith("\"") && value.endsWith("\"")) {
-            value = value.substring(1, value.length() - 1);
-        }
-
-        try {
-            switch (field) {
-                case "name":
-                    exp.setName(value);  // Здесь сработает ВСЯ валидация из setName()
-                    System.out.println("Поле name обновлено");
-                    return true;
-
-                case "description":
-                    exp.setDescribtion(value);  // Здесь сработает ВСЯ валидация из setDecribtion()
-                    System.out.println("Поле description обновлено");
-                    return true;
-
-                default:
-                    System.out.println("Ошибка: Неизвестное поле '" + field + "'. Доступные поля: name, description");
-                    return false;
+            // Если пользователь ничего не ввел - оставляем текущее
+            if (input.isEmpty()) {
+                return false;
             }
-        } catch (IllegalArgumentException e) {
-            // Ловим исключения из сеттеров и показываем пользователю
-            System.out.println("Ошибка в поле " + field + ": " + e.getMessage());
-            return false;
+
+            try {
+                experiment.setName(input);  // здесь сработает валидация
+                System.out.println("Название обновлено");
+                return true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+                System.out.println("Повторите ввод");
+                // продолжаем цикл
+            }
+        }
+    }
+
+    // Метод для обновления описания
+    private boolean updateDescription(Experiment experiment) {
+        String currentDesc = experiment.getDescribtion();
+        if (currentDesc == null || currentDesc.isEmpty()) {
+            System.out.println("Текущее описание: (пусто)");
+        } else {
+            System.out.println("Текущее описание: " + currentDesc);
+        }
+
+        while (true) {
+            System.out.print("Новое описание (Enter - оставить текущее): ");
+            String input = scanner.nextLine();  // не делаем trim(), чтобы можно было ввести пустую строку
+
+            // Если пользователь ничего не ввел - оставляем текущее
+            if (input.isEmpty()) {
+                return false;
+            }
+
+            try {
+                experiment.setDescribtion(input);  // здесь сработает валидация
+                System.out.println("Описание обновлено");
+                return true;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+                System.out.println("Повторите ввод");
+                // продолжаем цикл
+            }
         }
     }
 }

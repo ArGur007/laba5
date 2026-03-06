@@ -21,14 +21,12 @@ public class Main {
 
         // Регистрируем команды
         invoker.register("create", new ExpCreate(manager, scanner, owner));
-
-        // Можно добавить другие команды
         invoker.register("show", new ExpShow(manager, scanner));
-        // invoker.register("exit", new ExitCommand());
-
+        invoker.register("update", new ExpUpdate(manager, scanner, owner));
+        invoker.register("help",new Help());
         // Бесконечный цикл
         while (true) {
-            System.out.println("\nДоступные команды: create, list, show, update");
+            System.out.println(" Для того чтобы открыть справку, введите help");
             System.out.print("> ");
             String input = scanner.nextLine().trim();
 
@@ -51,9 +49,5 @@ public class Main {
         scanner.close();
     }
 }
-
-// добавть остальные команды
-// добавить остальные коллекции
-// залить на гит
 
 
