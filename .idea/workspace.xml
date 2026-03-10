@@ -4,13 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4f41f0f4-a3c5-4041-8799-95fdd73487c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Run.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RunCreate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RunResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CommandInvoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CommandInvoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Experiment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Experiment.java" afterDir="false" />
+    <list default="true" id="4f41f0f4-a3c5-4041-8799-95fdd73487c0" name="Changes" comment="Добавили недостающие классы">
+      <change afterPath="$PROJECT_DIR$/src/ResultCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/RunCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/CollectionManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/CollectionManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ExpCreate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ExpCreate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/Help.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/Help.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/Run.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/Run.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/RunCreate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/RunCreate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/RunResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/RunResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CollectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ExpCreate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExpCreate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ExpList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExpList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Help.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RunCreate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RunCreate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RunResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RunResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +76,35 @@
       <option name="presentableId" value="Default" />
       <updated>1773161684470</updated>
     </task>
+    <task id="LOCAL-00001" summary="Добавили недостающие классы">
+      <option name="closed" value="true" />
+      <created>1773167298468</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1773167298468</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Добавили недостающие классы">
+      <option name="closed" value="true" />
+      <created>1773167380531</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1773167380531</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Добавили недостающие классы">
+      <option name="closed" value="true" />
+      <created>1773167517164</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1773167517164</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Добавили недостающие классы" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавили недостающие классы" />
   </component>
 </project>

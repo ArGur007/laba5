@@ -5,7 +5,7 @@ public class ExpCreate implements Command {
     private Scanner scanner;
     private String ownerUsername;
 
-    public ExpCreate(CollectionManager manager, Scanner scanner, String ownerUsername){
+    public ExpCreate(CollectionManager manager, Scanner scanner, String ownerUsername) {
         this.manager = manager;
         this.scanner = scanner;
         this.ownerUsername = ownerUsername;
@@ -13,32 +13,30 @@ public class ExpCreate implements Command {
 
     @Override
     public void execute() {
-        System.out.println("--- Добавление нового эксперимента ---");
+        try {
+            System.out.println("--- Создание нового эксперимента ---");
+            System.out.print("Название: ");
+            String name = scanner.nextLine().trim();
 
-        while (true) {
-            try {
-                // Всегда запрашиваем и название, И описание вместе
-                System.out.print("Название: ");
-                String nameInput = scanner.nextLine().trim();
+            System.out.print("Описание: ");
+            String description = scanner.nextLine().trim();
 
-                System.out.print("Описание (можно пусто): ");
-                String descInput = scanner.nextLine();
+            // Создаем объект. Конструктор Experiment сам проверит длину строк.
+            Experiment newExp = new Experiment(
+                    manager.getNextId(),
+                    name,
+                    description,
+                    ownerUsername
+            );
 
-                // Создаем эксперимент - здесь сработают все проверки в сеттерах!
-                Experiment experiment = new Experiment(null, nameInput, descInput, ownerUsername);
+            // Передаем созданный объект в менеджер
+            manager.create(newExp);
 
-                // Если дошли сюда - ошибок нет, добавляем
-                manager.create(experiment);
-                break; // успешно создали - выходим из цикла
-
-            } catch (IllegalArgumentException e) {
-                // Ловим исключения из сеттеров (пустое имя, слишком длинное имя или описание)
-                System.out.println("Ошибка: " + e.getMessage());
-                System.out.println("Повторите ввод заново.");
-                // Цикл продолжается - снова запросим и название, и описание
-            }
+        } catch (IllegalArgumentException e) {
+            // Сюда попадут ошибки, если название слишком длинное или пустое
+            System.out.println("Ошибка валидации: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Ошибка при создании: " + e.getMessage());
         }
-
     }
-
 }

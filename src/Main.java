@@ -2,45 +2,60 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // Инициализация инфраструктуры
         CollectionManager manager = new CollectionManager();
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("=== Система управления химическими экспериментами ===");
-        System.out.print("Введите имя пользователя (Enter для SYSTEM): ");
-        String owner = scanner.nextLine().trim();
-        if (owner.isEmpty()) {
-            owner = "SYSTEM";
-        }
-
-        // 1. Создаем invoker
         CommandInvoker invoker = new CommandInvoker();
 
-        // 2. Регистрируем базовые команды
-        invoker.register("help", new Help());
+        System.out.println("=".repeat(50));
+        System.out.println("  ИНФОХИМИЯ: СИСТЕМА УПРАВЛЕНИЯ ЭКСПЕРИМЕНТАМИ");
+        System.out.println("=".repeat(50));
+
+        // Авторизация (упрощенная)
+        System.out.print("Введите имя оператора (Enter для SYSTEM): ");
+        String owner = scanner.nextLine().trim();
+        if (owner.isEmpty()) owner = "SYSTEM";
+
+        // --- РЕГИСТРАЦИЯ КОМАНД ---
+
+        // Помощь (сохраняем в переменную для автозапуска)
+        Help helpCommand = new Help();
+        invoker.register("help", helpCommand);
+
+        // Эксперименты (Команды 1-4)
         invoker.register("create", new ExpCreate(manager, scanner, owner));
         invoker.register("show", new ExpShow(manager, scanner));
         invoker.register("update", new ExpUpdate(manager, scanner, owner));
-        invoker.register("run", new RunCreate(manager, scanner));
-        System.out.println("Добро пожаловать, " + owner + "!");
 
-        // 3. Бесконечный цикл
+        // Запуски (Команды 5-7)
+        invoker.register("run_add", new RunCreate(manager, scanner));
+        invoker.register("run_list", new RunCommand(manager, scanner, "list"));
+        invoker.register("run_show", new RunCommand(manager, scanner, "show"));
+
+        // Результаты и Аналитика (Команды 8-10)
+        invoker.register("res_add", new ResultCommand(manager, scanner, "add"));
+        invoker.register("exp_summary", new ResultCommand(manager, scanner, "summary"));
+
+        // ПРИВЕТСТВИЕ И АВТОМАТИЧЕСКАЯ СПРАВКА
+        System.out.println("\nЗдравствуйте, " + owner + "!");
+        helpCommand.execute();
+
+        // --- ГЛАВНЫЙ ЦИКЛ ОБРАБОТКИ ---
         while (true) {
-            System.out.println("\n(Введите 'help' для списка команд или 'exit' для выхода)");
-            System.out.print("> ");
-
+            System.out.print("\nВведите команду > ");
             String input = scanner.nextLine().trim();
 
-            // Выход из программы
+            // Обработка выхода
             if (input.equalsIgnoreCase("exit")) {
-                System.out.println("Завершение работы... До свидания!");
+                System.out.println("Завершение работы. Все данные сохранены в памяти.");
                 break;
             }
 
-            // Обработка команды list (с флагом --mine)
+            // Специальная обработка для команды list (так как она имеет флаг)
             if (input.startsWith("list")) {
                 boolean showOnlyMine = input.contains("--mine");
-                ExpList listCommand = new ExpList(manager, owner, showOnlyMine);
-                listCommand.execute();
+                // Создаем команду и передаем флаг, вызывая метод getByOwner внутри
+                new ExpList(manager, owner, showOnlyMine).execute();
             }
             // Обработка всех остальных зарегистрированных команд
             else if (!input.isEmpty()) {
@@ -51,5 +66,3 @@ public class Main {
         scanner.close();
     }
 }
-
-

@@ -2,35 +2,43 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class CollectionManager{
-    List<Experiment> experimentList = new ArrayList<>();
-    private long nextId = 1L;
+public class CollectionManager {
+    private final Map<Long, Experiment> experiments = new HashMap<>();
+    private long nextExpId = 1;
 
-    private Map<Long, Experiment> experimentMap = new HashMap<>();
+    // Генерация ID для новых экспериментов
+    public long getNextId() {
+        return nextExpId++;
+    }
 
+    // Принимает готовый объект (исправлено под твой запрос)
     public void create(Experiment exp) {
-        if (exp.getId() == null){
-            Experiment expWithId = new Experiment(
-                    nextId++,
-                    exp.getName(),
-                    exp.getDescribtion(), exp.getOwnerUsername());
-            experimentList.add(expWithId);
-            experimentMap.put(expWithId.getId(),expWithId);
-            System.out.println("OK. Experiment_id= "+expWithId.getId());
-        } else {
-            experimentList.add(exp);
-            experimentMap.put(exp.getId(), exp);
-            System.out.println("OK. Experiment_id= "+ exp.getId());
-        }
+        experiments.put(exp.getId(), exp);
+        System.out.println("OK. Experiment_id=" + exp.getId());
+    }
 
+    public Experiment findById(Long id) {
+        return experiments.get(id);
     }
 
     public List<Experiment> getAll() {
-        return new ArrayList<>(experimentList);
-    }
-    public Experiment findById(Long id){
-        return experimentMap.get(id);
+        return new ArrayList<>(experiments.values());
     }
 
+    public List<Experiment> getByOwner(String owner) {
+        return experiments.values().stream()
+                .filter(e -> e.getOwnerUsername().equalsIgnoreCase(owner))
+                .collect(Collectors.toList());
+    }
+
+    public Run findRunById(long runId) {
+        for (Experiment exp : experiments.values()) {
+            for (Run run : exp.getRuns()) {
+                if (run.getId() == runId) return run;
+            }
+        }
+        return null;
+    }
 }
