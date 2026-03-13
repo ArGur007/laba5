@@ -13,30 +13,33 @@ public class ExpCreate implements Command {
 
     @Override
     public void execute() {
-        try {
-            System.out.println("--- Создание нового эксперимента ---");
-            System.out.print("Название: ");
-            String name = scanner.nextLine().trim();
+        System.out.println("--- Создание нового эксперимента ---");
 
-            System.out.print("Описание: ");
-            String description = scanner.nextLine().trim();
+        // Цикл будет крутиться до тех пор, пока данные не пройдут валидацию
+        while (true) {
+            try {
+                System.out.print("Название: ");
+                String name = scanner.nextLine().trim();
 
-            // Создаем объект. Конструктор Experiment сам проверит длину строк.
-            Experiment newExp = new Experiment(
-                    manager.getNextId(),
-                    name,
-                    description,
-                    ownerUsername
-            );
+                System.out.print("Описание: ");
+                String description = scanner.nextLine().trim();
+                Experiment newExp = new Experiment(
+                        manager.getNextId(),
+                        name,
+                        description,
+                        ownerUsername
+                );
 
-            // Передаем созданный объект в менеджер
-            manager.create(newExp);
+                manager.create(newExp);
+                break;
 
-        } catch (IllegalArgumentException e) {
-            // Сюда попадут ошибки, если название слишком длинное или пустое
-            System.out.println("Ошибка валидации: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Ошибка при создании: " + e.getMessage());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка валидации: " + e.getMessage());
+                System.out.println("Пожалуйста, попробуйте ввести данные еще раз.\n");
+            } catch (Exception e) {
+                System.out.println("Критическая ошибка: " + e.getMessage());
+                break;
+            }
         }
     }
 }

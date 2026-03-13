@@ -11,7 +11,6 @@ public class Main {
         System.out.println("  ИНФОХИМИЯ: СИСТЕМА УПРАВЛЕНИЯ ЭКСПЕРИМЕНТАМИ");
         System.out.println("=".repeat(50));
 
-        // Авторизация (упрощенная)
         System.out.print("Введите имя оператора (Enter для SYSTEM): ");
         String owner = scanner.nextLine().trim();
         if (owner.isEmpty()) owner = "SYSTEM";
@@ -36,11 +35,9 @@ public class Main {
         invoker.register("res_add", new ResultCommand(manager, scanner, "add"));
         invoker.register("exp_summary", new ResultCommand(manager, scanner, "summary"));
 
-        // ПРИВЕТСТВИЕ И АВТОМАТИЧЕСКАЯ СПРАВКА
         System.out.println("\nЗдравствуйте, " + owner + "!");
         helpCommand.execute();
 
-        // --- ГЛАВНЫЙ ЦИКЛ ОБРАБОТКИ ---
         while (true) {
             System.out.print("\nВведите команду > ");
             String input = scanner.nextLine().trim();

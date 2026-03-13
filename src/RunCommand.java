@@ -1,11 +1,9 @@
-import java.util.List;
-import java.util.Scanner;
 import java.util.Scanner;
 
 public class RunCommand implements Command {
     private CollectionManager manager;
     private Scanner scanner;
-    private String type; // "list" или "show"
+    private String type;
 
     public RunCommand(CollectionManager manager, Scanner scanner, String type) {
         this.manager = manager;
@@ -55,11 +53,11 @@ public class RunCommand implements Command {
 
             for (RunResult res : run.getResults()) {
                 System.out.printf("%-5d | %-12s | %-10.2f | %-6s | %s\n",
-                        res.getId(),        // getId()
-                        res.getParameter(), // getParameter()
-                        res.getValue(),     // getValue()
-                        res.getUnit(),      // getUnit()
-                        res.getComment()    // getComment()
+                        res.getId(),
+                        res.getParameter(),
+                        res.getValue(),
+                        res.getUnit(),
+                        res.getComment()
                 );
             }
             System.out.println("=".repeat(60));

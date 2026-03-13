@@ -10,18 +10,20 @@ public class Run {
     private final LocalDateTime time;
     private final List<RunResult> results = new ArrayList<>();
 
+    // Статическое поле для генерации уникальных ID результатов
     private static long nextResId = 88;
 
     public Run(long id, String name, String operator) {
         this.id = id;
         this.name = name;
         this.operator = operator;
-        this.time = LocalDateTime.now(); // Время фиксируется в момент создания
+        this.time = LocalDateTime.now();
     }
-
-    public void addResult(String param, double val, String unit, String comment) {
-        RunResult newResult = new RunResult(nextResId++, param, val, unit, comment);
+    public long addResult(String param, double val, String unit, String comment) {
+        long currentId = nextResId++;
+        RunResult newResult = new RunResult(currentId, param, val, unit, comment);
         results.add(newResult);
+        return currentId;
     }
 
     // Геттеры
