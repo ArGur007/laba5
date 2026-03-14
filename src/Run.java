@@ -11,7 +11,7 @@ public class Run {
     private final List<RunResult> results = new ArrayList<>();
 
     // Статическое поле для генерации уникальных ID результатов
-    private static long nextResId = 88;
+    private static long nextResId = 0;
 
     public Run(long id, String name, String operator) {
         this.id = id;
