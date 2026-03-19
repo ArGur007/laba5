@@ -1,23 +1,13 @@
-# IntelliJ IDEA
+# Compiled files
+*.class
+out/
+target/
+
+# IDE
 .idea/
 *.iml
 *.iws
 *.ipr
-out/
 
-# Скомпилированные файлы
-target/
-build/
-*.class
-
-# Логи
+# Logs
 *.log
-
-# Архивы
-*.jar
-*.war
-*.zip
-*.tar.gz
-
-# Файлы операционной системы
-.DS_Store
