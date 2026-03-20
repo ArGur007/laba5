@@ -3,7 +3,6 @@ package ru.laba5.cli;
 import ru.laba5.domain.Run;
 import ru.laba5.domain.RunResult;
 import ru.laba5.service.CollectionManager;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,26 +27,28 @@ public class ResultListCommand implements Command {
             return;
         }
 
+        // ✅ ПРОВЕРЯЕМ существование run
         Run run = manager.findRunById(runId);
         if (run == null) {
-            System.out.println("Запуск не найден");
+            System.out.println("Запуск #" + runId + " не найден");
             return;
         }
 
-        List<RunResult> results = run.getResults();
+        // ✅ ✅ ✅ ИСПРАВЛЕНО: используем manager.getResultsByRun()! ✅ ✅ ✅
+        List<RunResult> results = manager.getResultsByRun(runId);
+
         if (results.isEmpty()) {
             System.out.println("Результатов нет");
             return;
         }
 
-        // Обработка флага --param (упрощённо, можно добавить позже)
         System.out.printf("%-5s | %-12s | %-10s | %-6s | %s\n",
                 "ID", "Параметр", "Значение", "Unit", "Комментарий");
         System.out.println("-".repeat(60));
         for (RunResult res : results) {
             System.out.printf("%-5d | %-12s | %-10.2f | %-6s | %s\n",
                     res.getId(),
-                    res.getParam(),
+                    res.getParam().name(),  // ✅ .name() для enum!
                     res.getValue(),
                     res.getUnit(),
                     res.getComment());

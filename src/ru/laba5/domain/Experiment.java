@@ -1,105 +1,98 @@
 package ru.laba5.domain;
 
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class Experiment {
-    private final Long id;
-    private String name;
-    private String description;
-    private String ownerUsername;
+    private final long id;                    // primitive long
+    private final String name;
+    private final String description;
+    private final String ownerUsername;
     private final Instant createdAt;
-    private Instant updatedAt;
-    private final List<Run> runs = new ArrayList<>();
+    private final Instant updatedAt;
 
-    private static final int MAX_NAME_LENGTH = 128;
-    private static final int MAX_DESCRIPTION_LENGTH = 512;
+    public static final int MAX_NAME_LENGTH = 128;
+    public static final int MAX_DESCRIPTION_LENGTH = 512;
+    public static final int MAX_OWNER_LENGTH = 64;
 
-    public Experiment(Long id, String name, String description, String ownerUsername) {
+    public Experiment(long id, String name, String description, String ownerUsername) {
+        validateId(id);
+        validateName(name);
+        validateDescription(description);
+        validateOwnerUsername(ownerUsername);
+
         this.id = id;
-        setName(name);
-        setDescription(description);
-        setOwnerUsername(ownerUsername);
+        this.name = name.trim();
+        this.description = description != null ? description.trim() : "";
+        this.ownerUsername = ownerUsername != null ? ownerUsername.trim() : "SYSTEM";
         this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
+        this.updatedAt = this.createdAt;
     }
 
-    public void addRun(Run run) {
-        this.runs.add(run);
-        setUpdatedAt();
+    public Experiment updateName(String newName) {
+        validateName(newName);
+        return new Experiment(id, newName.trim(), description, ownerUsername);
     }
 
-    public void removeRun(long runId) {
-        runs.removeIf(r -> r.getId() == runId);
-        setUpdatedAt();
+    public Experiment updateDescription(String newDescription) {
+        validateDescription(newDescription);
+        return new Experiment(id, name, newDescription != null ? newDescription.trim() : "", ownerUsername);
     }
 
     public List<Run> getRuns() {
-        return new ArrayList<>(runs);
+        return Collections.emptyList();
     }
 
-    public Long getId() {
-        return id;
+    public long getId() { return id; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public String getOwnerUsername() { return ownerUsername; }
+    public Instant getCreatedAt() { return createdAt; }
+    public Instant getUpdatedAt() { return updatedAt; }
+
+    private static void validateId(long id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID должен быть положительным: " + id);
+        }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getOwnerUsername() {
-        return ownerUsername;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setName(String name) {
+    private static void validateName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Название не может быть пустым");
         }
-        if (name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("Название не должно превышать " + MAX_NAME_LENGTH + " символов");
+        if (name.trim().length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException("Название <= " + MAX_NAME_LENGTH + " символов");
         }
-        this.name = name.trim();
-        setUpdatedAt();
     }
 
-    public void setDescription(String description) {
-        if (description == null || description.trim().isEmpty()) {
-            this.description = "";
-        } else if (description.length() > MAX_DESCRIPTION_LENGTH) {
-            throw new IllegalArgumentException("Описание не должно превышать " + MAX_DESCRIPTION_LENGTH + " символов");
-        } else {
-            this.description = description.trim();
+    private static void validateDescription(String description) {
+        if (description != null && description.length() > MAX_DESCRIPTION_LENGTH) {
+            throw new IllegalArgumentException("Описание <= " + MAX_DESCRIPTION_LENGTH + " символов");
         }
-        setUpdatedAt();
     }
 
-    public void setOwnerUsername(String ownerUsername) {
-        if (ownerUsername == null || ownerUsername.trim().isEmpty()) {
-            this.ownerUsername = "SYSTEM";
-        } else {
-            this.ownerUsername = ownerUsername.trim();
+    private static void validateOwnerUsername(String ownerUsername) {
+        if (ownerUsername != null && ownerUsername.trim().length() > MAX_OWNER_LENGTH) {
+            throw new IllegalArgumentException("Владелец <= " + MAX_OWNER_LENGTH + " символов");
         }
-        setUpdatedAt();
     }
 
-    public void setUpdatedAt() {
-        this.updatedAt = Instant.now();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Experiment that = (Experiment) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(id);
     }
 
     @Override
     public String toString() {
-        return "Experiment #" + id + " { name='" + name + "', owner='" + ownerUsername + "', runs=" + runs.size() + " }";
+        return String.format("Experiment %d name %s owner %s", id, name, ownerUsername);
     }
 }

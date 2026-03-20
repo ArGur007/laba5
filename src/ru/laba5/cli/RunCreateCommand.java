@@ -4,47 +4,34 @@ import ru.laba5.domain.Experiment;
 import ru.laba5.domain.Run;
 import ru.laba5.service.CollectionManager;
 
-import java.util.Scanner;
-
 public class RunCreateCommand implements Command {
     private final CollectionManager manager;
-    private final Scanner scanner;
+    private final InputReader reader;
+    private final String currentUser;
 
-    public RunCreateCommand(CollectionManager manager, Scanner scanner) {
+    public RunCreateCommand(CollectionManager manager, InputReader reader, String currentUser) {
         this.manager = manager;
-        this.scanner = scanner;
+        this.reader = reader;
+        this.currentUser = currentUser;
     }
 
     @Override
     public void execute() {
-        System.out.print("Введите experiment_id: ");
-        String expIdInput = scanner.nextLine().trim();
+        // ✅ ПРОВЕРКА существования exp_id
         long expId;
-        try {
-            expId = Long.parseLong(expIdInput);
-        } catch (NumberFormatException e) {
-            System.out.println("Ошибка: experiment_id должен быть числом");
-            return;
+        while (true) {
+            expId = reader.readLong("experiment_id: ");
+            if (manager.findExperimentById(expId) != null) break;
+            System.out.println("Эксперимент #" + expId + " не найден");
         }
 
-        Experiment exp = manager.findExperimentById(expId);
-        if (exp == null) {
-            System.out.println("Ошибка: эксперимент не найден");
-            return;
-        }
+        String name = reader.readNonEmpty("Run name: ");
+        String operator = reader.readString("Operator [" + currentUser + "]: ");
+        if (operator.isEmpty()) operator = currentUser;
 
-        System.out.print("Run name: ");
-        String name = scanner.nextLine().trim();
-        System.out.print("Operator: ");
-        String operator = scanner.nextLine().trim();
-
-        try {
-            long runId = manager.getNextRunId();
-            Run run = new Run(runId, expId, name, operator);
-            manager.addRun(run);
-            System.out.println("OK run_id=" + runId);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка валидации: " + e.getMessage());
-        }
+        long runId = manager.getNextRunId();
+        Run run = new Run(runId, expId, name, operator);
+        manager.addRun(run);
+        System.out.println("OK run_id=" + runId);
     }
 }

@@ -3,39 +3,25 @@ package ru.laba5.cli;
 import ru.laba5.domain.Experiment;
 import ru.laba5.service.CollectionManager;
 
-import java.util.Scanner;
-
 public class ExpCreateCommand implements Command {
     private final CollectionManager manager;
-    private final Scanner scanner;
-    private final String ownerUsername;
+    private final InputReader reader;
+    private final String currentUser;
 
-    public ExpCreateCommand(CollectionManager manager, Scanner scanner, String ownerUsername) {
+    public ExpCreateCommand(CollectionManager manager, InputReader reader, String currentUser) {
         this.manager = manager;
-        this.scanner = scanner;
-        this.ownerUsername = ownerUsername;
+        this.reader = reader;
+        this.currentUser = currentUser;
     }
 
     @Override
     public void execute() {
-        System.out.println("--- Создание нового эксперимента ---");
-        while (true) {
-            try {
-                System.out.print("Название: ");
-                String name = scanner.nextLine().trim();
+        String name = reader.readNonEmpty("Название: ");
+        String description = reader.readString("Описание: ");
 
-                System.out.print("Описание: ");
-                String description = scanner.nextLine().trim();
-
-                long id = manager.getNextExperimentId();
-                Experiment newExp = new Experiment(id, name, description, ownerUsername);
-                manager.addExperiment(newExp);
-                System.out.println("OK experiment_id=" + id);
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Ошибка валидации: " + e.getMessage());
-                System.out.println("Пожалуйста, попробуйте снова.\n");
-            }
-        }
+        long id = manager.getNextExperimentId();
+        Experiment exp = new Experiment(id, name, description, currentUser);
+        manager.addExperiment(exp);
+        System.out.println("OK exp_id=" + id);
     }
 }

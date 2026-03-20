@@ -1,7 +1,8 @@
 package ru.laba5.cli;
 
 import ru.laba5.service.CollectionManager;
-
+import ru.laba5.cli.InputReader;
+import ru.laba5.cli.Command;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -20,14 +21,16 @@ public class CommandRegistry {
     }
 
     private void registerCommands() {
+        InputReader reader = new InputReader(scanner);
+
         commands.put("help", new HelpCommand());
-        commands.put("exp_create", new ExpCreateCommand(manager, scanner, currentUser));
+        commands.put("exp_create", new ExpCreateCommand(manager, reader, currentUser));
         commands.put("exp_show", new ExpShowCommand(manager, scanner));
-        commands.put("exp_update", new ExpUpdateCommand(manager, scanner, currentUser));
-        commands.put("run_add", new RunCreateCommand(manager, scanner));
+        commands.put("exp_update", new ExpUpdateCommand(manager, reader, currentUser));
+        commands.put("run_add", new RunCreateCommand(manager, reader, currentUser));
         commands.put("run_list", new RunListCommand(manager, scanner));
         commands.put("run_show", new RunShowCommand(manager, scanner));
-        commands.put("res_add", new ResultAddCommand(manager, scanner));
+        commands.put("res_add", new ResultAddCommand(manager, reader, currentUser));
         commands.put("res_list", new ResultListCommand(manager, scanner));
         commands.put("exp_summary", new ExpSummaryCommand(manager, scanner));
     }
@@ -39,7 +42,6 @@ public class CommandRegistry {
         String cmdName = parts[0].toLowerCase();
         String args = parts.length > 1 ? parts[1] : "";
 
-        // Специальная обработка для exp_list с флагом
         if (cmdName.equals("exp_list")) {
             boolean showOnlyMine = args.contains("--mine");
             new ExpListCommand(manager, currentUser, showOnlyMine).execute();

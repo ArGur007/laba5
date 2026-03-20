@@ -5,13 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f41f0f4-a3c5-4041-8799-95fdd73487c0" name="Changes" comment="Добавили недостающие классы">
+      <change afterPath="$PROJECT_DIR$/src/ru/laba5/cli/InputReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/laba5/service/IdGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ExpList.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ExpList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ExpCreate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ExpCreate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ResultCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ResultCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Run.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RunCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RunCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/CollectionManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/Command.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/CommandInvoker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ExpCreate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ExpList.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ExpShow.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ExpUpdate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/Experiment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/Help.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/Run.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/RunCreate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/RunResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/CommandRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/CommandRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpCreateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpUpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpUpdateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ResultAddCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ResultAddCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ResultListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ResultListCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/RunCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/RunCreateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/domain/Experiment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/domain/Experiment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/domain/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/domain/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/domain/RunResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/domain/RunResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/service/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/service/CollectionManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,26 +1,49 @@
 package ru.laba5.service;
 
 import ru.laba5.domain.*;
-
-        import java.util.*;
-        import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CollectionManager {
-    private final Map<Long, Experiment> experiments = new HashMap<>();
-    private final Map<Long, Run> runs = new HashMap<>();
-    private final Map<Long, RunResult> results = new HashMap<>();
+    // ✅ МУТАБЕЛЬНЫЕ внутри (для записи), IMMUTABLE снаружи (для чтения)
+    private final Map<Long, Experiment> experiments;
+    private final Map<Long, Run> runs;
+    private final Map<Long, RunResult> results;
 
-    private long nextExperimentId = 1;
-    private long nextRunId = 1;
-    private long nextResultId = 1;
+    // ✅ Приватные мутабельные версии для записи
+    private final Map<Long, Experiment> mutableExperiments;
+    private final Map<Long, Run> mutableRuns;
+    private final Map<Long, RunResult> mutableResults;
 
-    // Experiment methods
-    public long getNextExperimentId() {
-        return nextExperimentId++;
+    private final IdGenerator experimentIds = new IdGenerator();
+    private final IdGenerator runIds = new IdGenerator();
+    private final IdGenerator resultIds = new IdGenerator();
+
+    public CollectionManager() {
+        // 1. Создаём мутабельные HashMap
+        Map<Long, Experiment> expMutable = new HashMap<>();
+        Map<Long, Run> runMutable = new HashMap<>();
+        Map<Long, RunResult> resMutable = new HashMap<>();
+
+        // 2. Оборачиваем в unmodifiable для ГЕТТЕРОВ
+        this.experiments = Collections.unmodifiableMap(expMutable);
+        this.runs = Collections.unmodifiableMap(runMutable);
+        this.results = Collections.unmodifiableMap(resMutable);
+
+        // 3. Сохраняем ссылки на мутабельные версии
+        this.mutableExperiments = expMutable;
+        this.mutableRuns = runMutable;
+        this.mutableResults = resMutable;
     }
 
+    // ✅ EXPERIMENT методы
+    public long getNextExperimentId() { return experimentIds.nextId(); }
+
     public void addExperiment(Experiment exp) {
-        experiments.put(exp.getId(), exp);
+        if (mutableExperiments.containsKey(exp.getId())) {
+            throw new IllegalArgumentException("Experiment ID " + exp.getId() + " уже существует");
+        }
+        mutableExperiments.put(exp.getId(), exp);
     }
 
     public Experiment findExperimentById(long id) {
@@ -31,40 +54,28 @@ public class CollectionManager {
         return new ArrayList<>(experiments.values());
     }
 
+    // ✅ ✅ ✅ ЭТОТ МЕТОД БЫЛ ОТСУТСТВОВАЛ! ✅ ✅ ✅
     public List<Experiment> getExperimentsByOwner(String owner) {
         return experiments.values().stream()
-                .filter(e -> e.getOwnerUsername().equalsIgnoreCase(owner))
+                .filter(e -> e.getOwnerUsername().equals(owner))
                 .collect(Collectors.toList());
     }
 
-    public void updateExperiment(long id, String newName, String newDescription, String newOwner) {
-        Experiment exp = findExperimentById(id);
-        if (exp == null) throw new IllegalArgumentException("Experiment not found");
-        if (newName != null) exp.setName(newName);
-        if (newDescription != null) exp.setDescription(newDescription);
-        if (newOwner != null) exp.setOwnerUsername(newOwner);
-    }
-
-    public void removeExperiment(long id) {
-        Experiment exp = findExperimentById(id);
-        if (exp == null) throw new IllegalArgumentException("Experiment not found");
-        if (!exp.getRuns().isEmpty()) {
-            throw new IllegalStateException("Cannot delete experiment with existing runs");
+    public void updateExperiment(Experiment updatedExp) {
+        if (!mutableExperiments.containsKey(updatedExp.getId())) {
+            throw new IllegalArgumentException("Experiment #" + updatedExp.getId() + " не найден");
         }
-        experiments.remove(id);
+        mutableExperiments.put(updatedExp.getId(), updatedExp);
     }
 
-    // Run methods
-    public long getNextRunId() {
-        return nextRunId++;
-    }
+    // ✅ RUN методы
+    public long getNextRunId() { return runIds.nextId(); }
 
     public void addRun(Run run) {
-        if (!experiments.containsKey(run.getExperimentId())) {
-            throw new IllegalArgumentException("Experiment with id " + run.getExperimentId() + " does not exist");
+        if (!mutableExperiments.containsKey(run.getExperimentId())) {
+            throw new IllegalArgumentException("Experiment #" + run.getExperimentId() + " не существует");
         }
-        runs.put(run.getId(), run);
-        experiments.get(run.getExperimentId()).addRun(run);
+        mutableRuns.put(run.getId(), run);
     }
 
     public Run findRunById(long id) {
@@ -77,37 +88,21 @@ public class CollectionManager {
                 .collect(Collectors.toList());
     }
 
-    public void updateRun(long id, String newName, String newOperator) {
-        Run run = findRunById(id);
-        if (run == null) throw new IllegalArgumentException("Run not found");
-        if (newName != null) run.setName(newName);
-        if (newOperator != null) run.setOperatorName(newOperator);
+    public void updateRun(Run updatedRun) {
+        if (!mutableRuns.containsKey(updatedRun.getId())) {
+            throw new IllegalArgumentException("Run #" + updatedRun.getId() + " не найден");
+        }
+        mutableRuns.put(updatedRun.getId(), updatedRun);
     }
 
-    public void removeRun(long id) {
-        Run run = findRunById(id);
-        if (run == null) throw new IllegalArgumentException("Run not found");
-        if (!run.getResults().isEmpty()) {
-            throw new IllegalStateException("Cannot delete run with existing results");
-        }
-        runs.remove(id);
-        Experiment exp = experiments.get(run.getExperimentId());
-        if (exp != null) {
-            exp.removeRun(id);
-        }
-    }
-
-    // Result methods
-    public long getNextResultId() {
-        return nextResultId++;
-    }
+    // ✅ RESULT методы
+    public long getNextResultId() { return resultIds.nextId(); }
 
     public void addResult(RunResult result) {
-        if (!runs.containsKey(result.getRunId())) {
-            throw new IllegalArgumentException("Run with id " + result.getRunId() + " does not exist");
+        if (!mutableRuns.containsKey(result.getRunId())) {
+            throw new IllegalArgumentException("Run #" + result.getRunId() + " не существует");
         }
-        results.put(result.getId(), result);
-        runs.get(result.getRunId()).addResult(result);
+        mutableResults.put(result.getId(), result);
     }
 
     public RunResult findResultById(long id) {
@@ -121,64 +116,37 @@ public class CollectionManager {
     }
 
     public List<RunResult> getResultsByExperiment(long experimentId) {
-        return runs.values().stream()
-                .filter(r -> r.getExperimentId() == experimentId)
-                .flatMap(r -> r.getResults().stream())
+        return getRunsByExperiment(experimentId).stream()
+                .flatMap(run -> getResultsByRun(run.getId()).stream())
                 .collect(Collectors.toList());
     }
 
-    public void updateResult(long id, Double newValue, String newUnit, String newComment) {
-        RunResult res = findResultById(id);
-        if (res == null) throw new IllegalArgumentException("Result not found");
-        if (newValue != null) res.setValue(newValue);
-        if (newUnit != null) res.setUnit(newUnit);
-        if (newComment != null) res.setComment(newComment);
-    }
-
-    public void removeResult(long id) {
-        RunResult res = findResultById(id);
-        if (res == null) throw new IllegalArgumentException("Result not found");
-        results.remove(id);
-        Run run = runs.get(res.getRunId());
-        if (run != null) {
-            run.removeResult(id);
-        }
-    }
-
-    // Summary for experiment
+    // ✅ SUMMARY
     public Map<MeasurementParam, Summary> getExperimentSummary(long experimentId) {
-        List<RunResult> experimentResults = getResultsByExperiment(experimentId);
-        Map<MeasurementParam, List<Double>> valuesByParam = experimentResults.stream()
+        List<RunResult> expResults = getResultsByExperiment(experimentId);
+
+        return expResults.stream()
                 .collect(Collectors.groupingBy(
                         RunResult::getParam,
-                        Collectors.mapping(RunResult::getValue, Collectors.toList())
+                        Collectors.collectingAndThen(
+                                Collectors.mapping(RunResult::getValue, Collectors.toList()),
+                                list -> {
+                                    DoubleSummaryStatistics stats = list.stream()
+                                            .mapToDouble(Double::doubleValue).summaryStatistics();
+                                    return new Summary((long)stats.getCount(), stats.getMin(),
+                                            stats.getMax(), stats.getAverage());
+                                }
+                        )
                 ));
-
-        Map<MeasurementParam, Summary> summary = new HashMap<>();
-        for (Map.Entry<MeasurementParam, List<Double>> entry : valuesByParam.entrySet()) {
-            List<Double> vals = entry.getValue();
-            DoubleSummaryStatistics stats = vals.stream().mapToDouble(Double::doubleValue).summaryStatistics();
-            summary.put(entry.getKey(), new Summary(
-                    stats.getCount(),
-                    stats.getMin(),
-                    stats.getMax(),
-                    stats.getAverage()
-            ));
-        }
-        return summary;
     }
 
+    // ✅ Immutable Summary
     public static class Summary {
-        private final long count;
-        private final double min;
-        private final double max;
-        private final double avg;
+        public final long count;
+        public final double min, max, avg;
 
         public Summary(long count, double min, double max, double avg) {
-            this.count = count;
-            this.min = min;
-            this.max = max;
-            this.avg = avg;
+            this.count = count; this.min = min; this.max = max; this.avg = avg;
         }
 
         public long getCount() { return count; }

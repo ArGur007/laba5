@@ -1,83 +1,70 @@
 package ru.laba5.domain;
 
-
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class Run {
-    private final Long id;
+    private final long id;
     private final long experimentId;
-    private String name;
-    private String operatorName;
+    private final String name;
+    private final String operatorName;
     private final Instant createdAt;
-    private final List<RunResult> results = new ArrayList<>();
 
-    private static final int MAX_NAME_LENGTH = 128;
-    private static final int MAX_OPERATOR_LENGTH = 64;
+    public static final int MAX_NAME_LENGTH = 128;
+    public static final int MAX_OPERATOR_LENGTH = 64;
 
-    public Run(Long id, long experimentId, String name, String operatorName) {
+    public Run(long id, long experimentId, String name, String operatorName) {
+        validateId(id);
+        validateExperimentId(experimentId);
+        validateName(name);
+        validateOperatorName(operatorName);
+
         this.id = id;
         this.experimentId = experimentId;
-        setName(name);
-        setOperatorName(operatorName);
+        this.name = name.trim();
+        this.operatorName = operatorName != null ? operatorName.trim() : "SYSTEM";
         this.createdAt = Instant.now();
     }
 
-    public void addResult(RunResult result) {
-        results.add(result);
-    }
-
-    public void removeResult(long resultId) {
-        results.removeIf(r -> r.getId() == resultId);
+    public Run updateName(String newName) {
+        validateName(newName);
+        return new Run(id, experimentId, newName, operatorName);
     }
 
     public List<RunResult> getResults() {
-        return new ArrayList<>(results);
+        return Collections.emptyList();
     }
 
-    public Long getId() {
-        return id;
+    public long getId() { return id; }
+    public long getExperimentId() { return experimentId; }
+    public String getName() { return name; }
+    public String getOperatorName() { return operatorName; }
+    public Instant getCreatedAt() { return createdAt; }
+    
+    private static void validateId(long id) {
+        if (id <= 0) throw new IllegalArgumentException("ID > 0");
     }
 
-    public long getExperimentId() {
-        return experimentId;
+    private static void validateExperimentId(long expId) {
+        if (expId <= 0) throw new IllegalArgumentException("experimentId > 0");
     }
 
-    public String getName() {
-        return name;
+    private static void validateName(String name) {
+        if (name == null || name.trim().isEmpty())
+            throw new IllegalArgumentException("name не пустой");
+        if (name.trim().length() > MAX_NAME_LENGTH)
+            throw new IllegalArgumentException("name ≤ " + MAX_NAME_LENGTH);
     }
 
-    public String getOperatorName() {
-        return operatorName;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Название запуска не может быть пустым");
-        }
-        if (name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("Название запуска не должно превышать " + MAX_NAME_LENGTH + " символов");
-        }
-        this.name = name.trim();
-    }
-
-    public void setOperatorName(String operatorName) {
-        if (operatorName == null || operatorName.trim().isEmpty()) {
-            throw new IllegalArgumentException("Имя оператора не может быть пустым");
-        }
-        if (operatorName.length() > MAX_OPERATOR_LENGTH) {
-            throw new IllegalArgumentException("Имя оператора не должно превышать " + MAX_OPERATOR_LENGTH + " символов");
-        }
-        this.operatorName = operatorName.trim();
+    private static void validateOperatorName(String operatorName) {
+        if (operatorName != null && operatorName.trim().length() > MAX_OPERATOR_LENGTH)
+            throw new IllegalArgumentException("operator ≤ " + MAX_OPERATOR_LENGTH);
     }
 
     @Override
     public String toString() {
-        return String.format("Run #%d [%s] operator=%s", id, name, operatorName);
+        return String.format("Run %d experimentid %d name %s operator %s",
+                id, experimentId, name, operatorName);
     }
 }
