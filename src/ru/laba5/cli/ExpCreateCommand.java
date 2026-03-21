@@ -1,5 +1,6 @@
 package ru.laba5.cli;
 
+import Validation.InputReader;
 import ru.laba5.domain.Experiment;
 import ru.laba5.service.CollectionManager;
 

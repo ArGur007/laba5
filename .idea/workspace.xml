@@ -7,10 +7,12 @@
     <list default="true" id="4f41f0f4-a3c5-4041-8799-95fdd73487c0" name="Changes" comment="причесали">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/CommandRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/CommandRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpCreateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpUpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpUpdateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/InputReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validation/InputReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ResultAddCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ResultAddCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ResultListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ResultListCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/RunCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/RunCreateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/laba5/service/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/service/CollectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/domain/Experiment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/domain/Experiment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +106,23 @@
       <option name="project" value="LOCAL" />
       <updated>1774039430337</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="причесали">
+      <option name="closed" value="true" />
+      <created>1774069319951</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1774069319951</updated>
+    </task>
+    <task id="LOCAL-00007" summary="причесали">
+      <option name="closed" value="true" />
+      <created>1774069345472</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1774069345472</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

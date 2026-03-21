@@ -50,7 +50,6 @@ public final class Experiment {
     public String getOwnerUsername() { return ownerUsername; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
-
     private static void validateId(long id) {
         if (id <= 0) {
             throw new IllegalArgumentException("ID должен быть положительным: " + id);

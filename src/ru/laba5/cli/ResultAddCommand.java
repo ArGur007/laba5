@@ -1,5 +1,6 @@
 package ru.laba5.cli;
 
+import Validation.InputReader;
 import ru.laba5.domain.MeasurementParam;
 import ru.laba5.domain.Run;
 import ru.laba5.domain.RunResult;
