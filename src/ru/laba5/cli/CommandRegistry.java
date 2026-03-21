@@ -1,8 +1,6 @@
 package ru.laba5.cli;
 
 import ru.laba5.service.CollectionManager;
-import ru.laba5.cli.InputReader;
-import ru.laba5.cli.Command;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;

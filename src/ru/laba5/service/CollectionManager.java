@@ -5,12 +5,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CollectionManager {
-    // ✅ МУТАБЕЛЬНЫЕ внутри (для записи), IMMUTABLE снаружи (для чтения)
     private final Map<Long, Experiment> experiments;
     private final Map<Long, Run> runs;
     private final Map<Long, RunResult> results;
-
-    // ✅ Приватные мутабельные версии для записи
     private final Map<Long, Experiment> mutableExperiments;
     private final Map<Long, Run> mutableRuns;
     private final Map<Long, RunResult> mutableResults;
@@ -20,17 +17,13 @@ public class CollectionManager {
     private final IdGenerator resultIds = new IdGenerator();
 
     public CollectionManager() {
-        // 1. Создаём мутабельные HashMap
         Map<Long, Experiment> expMutable = new HashMap<>();
         Map<Long, Run> runMutable = new HashMap<>();
         Map<Long, RunResult> resMutable = new HashMap<>();
 
-        // 2. Оборачиваем в unmodifiable для ГЕТТЕРОВ
         this.experiments = Collections.unmodifiableMap(expMutable);
         this.runs = Collections.unmodifiableMap(runMutable);
         this.results = Collections.unmodifiableMap(resMutable);
-
-        // 3. Сохраняем ссылки на мутабельные версии
         this.mutableExperiments = expMutable;
         this.mutableRuns = runMutable;
         this.mutableResults = resMutable;
@@ -54,7 +47,6 @@ public class CollectionManager {
         return new ArrayList<>(experiments.values());
     }
 
-    // ✅ ✅ ✅ ЭТОТ МЕТОД БЫЛ ОТСУТСТВОВАЛ! ✅ ✅ ✅
     public List<Experiment> getExperimentsByOwner(String owner) {
         return experiments.values().stream()
                 .filter(e -> e.getOwnerUsername().equals(owner))
@@ -68,7 +60,6 @@ public class CollectionManager {
         mutableExperiments.put(updatedExp.getId(), updatedExp);
     }
 
-    // ✅ RUN методы
     public long getNextRunId() { return runIds.nextId(); }
 
     public void addRun(Run run) {
@@ -95,7 +86,6 @@ public class CollectionManager {
         mutableRuns.put(updatedRun.getId(), updatedRun);
     }
 
-    // ✅ RESULT методы
     public long getNextResultId() { return resultIds.nextId(); }
 
     public void addResult(RunResult result) {
@@ -121,7 +111,6 @@ public class CollectionManager {
                 .collect(Collectors.toList());
     }
 
-    // ✅ SUMMARY
     public Map<MeasurementParam, Summary> getExperimentSummary(long experimentId) {
         List<RunResult> expResults = getResultsByExperiment(experimentId);
 
@@ -140,7 +129,6 @@ public class CollectionManager {
                 ));
     }
 
-    // ✅ Immutable Summary
     public static class Summary {
         public final long count;
         public final double min, max, avg;

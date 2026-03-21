@@ -27,14 +27,12 @@ public class ResultListCommand implements Command {
             return;
         }
 
-        // ✅ ПРОВЕРЯЕМ существование run
         Run run = manager.findRunById(runId);
         if (run == null) {
             System.out.println("Запуск #" + runId + " не найден");
             return;
         }
 
-        // ✅ ✅ ✅ ИСПРАВЛЕНО: используем manager.getResultsByRun()! ✅ ✅ ✅
         List<RunResult> results = manager.getResultsByRun(runId);
 
         if (results.isEmpty()) {
@@ -48,7 +46,7 @@ public class ResultListCommand implements Command {
         for (RunResult res : results) {
             System.out.printf("%-5d | %-12s | %-10.2f | %-6s | %s\n",
                     res.getId(),
-                    res.getParam().name(),  // ✅ .name() для enum!
+                    res.getParam().name(),
                     res.getValue(),
                     res.getUnit(),
                     res.getComment());
