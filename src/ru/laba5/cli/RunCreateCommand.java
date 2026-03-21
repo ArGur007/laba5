@@ -1,6 +1,5 @@
 package ru.laba5.cli;
 
-import ru.laba5.domain.Experiment;
 import ru.laba5.domain.Run;
 import ru.laba5.service.CollectionManager;
 
@@ -17,7 +16,6 @@ public class RunCreateCommand implements Command {
 
     @Override
     public void execute() {
-        // ✅ ПРОВЕРКА существования exp_id
         long expId;
         while (true) {
             expId = reader.readLong("experiment_id: ");

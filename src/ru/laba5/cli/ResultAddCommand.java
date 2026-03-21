@@ -18,7 +18,6 @@ public class ResultAddCommand implements Command {
 
     @Override
     public void execute() {
-        // ✅ Цикл: только существующий run_id
         long runId;
         while (true) {
             runId = reader.readLong("run_id: ");
@@ -27,13 +26,12 @@ public class ResultAddCommand implements Command {
             System.out.println("Запуск #" + runId + " не найден");
         }
 
-        // ✅ НОВЫЙ ЦИКЛ: ТОЛЬКО параметры из enum!
         MeasurementParam param;
         while (true) {
             String paramStr = reader.readNonEmpty("Параметр (PH, CONDUCTIVITY, NITRATE): ");
             try {
                 param = MeasurementParam.valueOf(paramStr.toUpperCase());
-                break;  // ✅ Выйти из цикла!
+                break;
             } catch (IllegalArgumentException e) {
                 System.out.println("Ошибка: только PH, CONDUCTIVITY, NITRATE");
             }
