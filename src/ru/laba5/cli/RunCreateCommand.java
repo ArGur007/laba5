@@ -2,7 +2,6 @@ package ru.laba5.cli;
 
 import Validation.InputReader;
 import ru.laba5.domain.Run;
-import ru.laba5.service.CollectionManager;
 
 public class RunCreateCommand implements Command {
     private final CollectionManager manager;
@@ -16,7 +15,7 @@ public class RunCreateCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         long expId;
         while (true) {
             expId = reader.readLong("experiment_id: ");

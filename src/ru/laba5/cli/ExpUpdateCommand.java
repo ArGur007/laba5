@@ -2,7 +2,6 @@ package ru.laba5.cli;
 
 import Validation.InputReader;
 import ru.laba5.domain.Experiment;
-import ru.laba5.service.CollectionManager;
 
 public class ExpUpdateCommand implements Command {
     private final CollectionManager manager;
@@ -16,7 +15,7 @@ public class ExpUpdateCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         long id = reader.readLong("ID эксперимента: ");
         Experiment exp = manager.findExperimentById(id);
         if (exp == null) {

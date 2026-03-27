@@ -1,7 +1,6 @@
 package ru.laba5.cli;
 
 import ru.laba5.domain.Run;
-import ru.laba5.service.CollectionManager;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -17,7 +16,7 @@ public class RunListCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         System.out.print("Введите experiment_id: ");
         String expIdInput = scanner.nextLine().trim();
         long expId;

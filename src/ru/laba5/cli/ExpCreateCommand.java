@@ -2,7 +2,8 @@ package ru.laba5.cli;
 
 import Validation.InputReader;
 import ru.laba5.domain.Experiment;
-import ru.laba5.service.CollectionManager;
+
+import java.util.List;
 
 public class ExpCreateCommand implements Command {
     private final CollectionManager manager;
@@ -16,7 +17,7 @@ public class ExpCreateCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         String name = reader.readNonEmpty("Название: ");
         String description = reader.readString("Описание: ");
 

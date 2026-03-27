@@ -5,14 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f41f0f4-a3c5-4041-8799-95fdd73487c0" name="Changes" comment="причесали">
+      <change afterPath="$PROJECT_DIR$/src/ru/laba5/service/ExperimentManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/laba5/service/RunManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ru/laba5/service/RunResultManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/CommandRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/CommandRegistry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/ExpCreateCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/ExpCreateCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/ExpUpdateCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/ExpUpdateCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/InputReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/ResultAddCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/ResultAddCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/ResultListCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/ResultListCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/RunCreateCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/cli/RunCreateCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/domain/Experiment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/domain/Experiment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/service/CollectionManager$Summary.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/service/CollectionManager$Summary.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/service/CollectionManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Laba5/ru/laba5/service/CollectionManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/Command.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/CommandRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/CommandRegistry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpCreateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpListCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpShowCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpSummaryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpSummaryCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ExpUpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ExpUpdateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/InputReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validation/InputReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/HelpCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ResultAddCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ResultAddCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/ResultListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/ResultListCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/RunCreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/RunCreateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/laba5/domain/Experiment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/domain/Experiment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/RunListCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/RunListCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/laba5/cli/RunShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/laba5/cli/RunShowCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774069345472</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="причесали">
+      <option name="closed" value="true" />
+      <created>1774082228729</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774082228730</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

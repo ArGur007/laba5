@@ -2,7 +2,7 @@ package ru.laba5.cli;
 
 import ru.laba5.domain.Run;
 import ru.laba5.domain.RunResult;
-import ru.laba5.service.CollectionManager;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +16,7 @@ public class ResultListCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         System.out.print("Введите run_id: ");
         String runIdInput = scanner.nextLine().trim();
         long runId;

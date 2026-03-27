@@ -1,8 +1,8 @@
 package ru.laba5.cli;
 
 import ru.laba5.domain.MeasurementParam;
-import ru.laba5.service.CollectionManager;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -16,7 +16,7 @@ public class ExpSummaryCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         System.out.print("Введите experiment_id: ");
         String expIdInput = scanner.nextLine().trim();
         long expId;

@@ -1,7 +1,6 @@
 package ru.laba5.cli;
 
 import ru.laba5.domain.Experiment;
-import ru.laba5.service.CollectionManager;
 
 import java.util.Scanner;
 
@@ -15,7 +14,7 @@ public class ExpShowCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         System.out.print("Введите ID эксперимента: ");
         String input = scanner.nextLine().trim();
         try {

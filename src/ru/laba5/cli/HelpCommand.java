@@ -2,7 +2,7 @@ package ru.laba5.cli;
 
 public class HelpCommand implements Command {
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         System.out.println("\n" + "=".repeat(50));
         System.out.println("   ДОСТУПНЫЕ КОМАНДЫ");
         System.out.println("=".repeat(50));

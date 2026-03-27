@@ -1,25 +1,22 @@
 package ru.laba5.cli;
 
 import ru.laba5.domain.Experiment;
-import ru.laba5.service.CollectionManager;
 
 import java.util.List;
 
 public class ExpListCommand implements Command {
     private final CollectionManager manager;
     private final String currentOwner;
-    private final boolean showOnlyMine;
 
-    public ExpListCommand(CollectionManager manager, String currentOwner, boolean showOnlyMine) {
+    public ExpListCommand(CollectionManager manager, String currentOwner) {
         this.manager = manager;
         this.currentOwner = currentOwner;
-        this.showOnlyMine = showOnlyMine;
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         List<Experiment> list;
-        if (showOnlyMine) {
+        if (args.contains("--mine")) {
             list = manager.getExperimentsByOwner(currentOwner);
             System.out.println("\n--- Ваши эксперименты (оператор: " + currentOwner + ") ---");
         } else {

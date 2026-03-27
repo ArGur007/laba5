@@ -4,7 +4,6 @@ import Validation.InputReader;
 import ru.laba5.domain.MeasurementParam;
 import ru.laba5.domain.Run;
 import ru.laba5.domain.RunResult;
-import ru.laba5.service.CollectionManager;
 
 public class ResultAddCommand implements Command {
     private final CollectionManager manager;
@@ -18,7 +17,7 @@ public class ResultAddCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(List<String> args) {
         long runId;
         while (true) {
             runId = reader.readLong("run_id: ");
